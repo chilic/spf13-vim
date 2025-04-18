@@ -91,7 +91,7 @@
     " In your .vimrc.before.local file
     " list only the plugin groups you will use
     if !exists('g:spf13_bundle_groups')
-        let g:spf13_bundle_groups=['general', 'writing', 'neocomplete', 'programming', 'php', 'ruby', 'python', 'javascript', 'html', 'misc',]
+        let g:spf13_bundle_groups=['general', 'writing', 'programming', 'deoplete', 'misc', 'python', 'javascript', 'go', 'rust',]
     endif
 
     " To override all the included bundles, add the following to your
@@ -188,6 +188,15 @@
             Bundle 'Shougo/neosnippet'
             Bundle 'Shougo/neosnippet-snippets'
             Bundle 'honza/vim-snippets'
+        elseif count(g:spf13_bundle_groups, 'deoplete')
+            if has('nvim')
+                Bundle 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+            else
+                Bundle 'Shougo/deoplete.nvim'
+                Bundle 'roxma/nvim-yarp'
+                Bundle 'roxma/vim-hug-neovim-rpc'
+            endif
+            let g:deoplete#enable_at_startup = 1
         endif
     " }
 
@@ -270,7 +279,7 @@
     " Go Lang {
         if count(g:spf13_bundle_groups, 'go')
             "Bundle 'Blackrush/vim-gocode'
-            Bundle 'fatih/vim-go'
+            Plugin 'fatih/vim-go', {'do': ':GoInstallBinaries'}
         endif
     " }
 
@@ -282,9 +291,14 @@
         endif
     " }
 
+    " Rust {
+        if count(g:spf13_bundle_groups, 'rust')
+            Plugin 'rust-lang/rust.vim'
+        endif
+    " }
+
     " Misc {
         if count(g:spf13_bundle_groups, 'misc')
-            Bundle 'rust-lang/rust.vim'
             Bundle 'tpope/vim-markdown'
             Bundle 'spf13/vim-preview'
             Bundle 'tpope/vim-cucumber'
